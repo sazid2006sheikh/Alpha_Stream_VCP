@@ -1,76 +1,179 @@
-import React, { useContext, useState } from 'react'
-import withAuth from '../utils/withAuth'
-import { useNavigate } from 'react-router-dom'
-import "../App.css";
-import { Button, IconButton, TextField } from '@mui/material';
-import RestoreIcon from '@mui/icons-material/Restore';
-import { AuthContext } from '../contexts/AuthContext';
+import React, { useContext, useState, useEffect } from "react";
+import withAuth from "../utils/withAuth";
+import { useNavigate } from "react-router-dom";
+import "../styles/home.css";
+
+import { Button, IconButton, TextField } from "@mui/material";
+import RestoreIcon from "@mui/icons-material/Restore";
+import { AuthContext } from "../contexts/AuthContext";
 
 function HomeComponent() {
 
+  const navigate = useNavigate();
 
-    let navigate = useNavigate();
-    const [meetingCode, setMeetingCode] = useState("");
+  /* ===== STATES ===== */
+  const [meetingCode, setMeetingCode] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [currentTime, setCurrentTime] = useState(new Date());
 
+  const { addToUserHistory } = useContext(AuthContext);
 
-    const {addToUserHistory} = useContext(AuthContext);
-    let handleJoinVideoCall = async () => {
-        await addToUserHistory(meetingCode)
-        navigate(`/${meetingCode}`)
+  /* ===== LIVE CLOCK ===== */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  /* ===== FUNCTIONS ===== */
+
+  const handleJoinVideoCall = async () => {
+
+    if (!meetingCode.trim()) {
+      setErrorMsg("Please enter a meeting code.");
+      return;
     }
 
-    return (
-        <>
+    setErrorMsg("");
 
-            <div className="navBar">
+    await addToUserHistory(meetingCode);
+    navigate(`/${meetingCode}`);
+  };
 
-                <div style={{ display: "flex", alignItems: "center" }}>
+  const handleCreateMeeting = async () => {
+    const randomCode =
+      Math.random().toString(36).substring(2, 10);
 
-                    <h2>Alpha Speed</h2>
-                </div>
+    await addToUserHistory(randomCode);
+    navigate(`/${randomCode}`);
+  };
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton onClick={
-                        () => {
-                            navigate("/history")
-                        }
-                    }>
-                        <RestoreIcon />
-                    </IconButton>
-                    <p>History</p>
+  const formattedTime = currentTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-                    <Button onClick={() => {
-                        localStorage.removeItem("token")
-                        navigate("/auth")
-                    }}>
-                        Logout
-                    </Button>
-                </div>
+  const formattedDate = currentTime.toLocaleDateString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
 
+  return (
+    <div className="homePage">
 
-            </div>
+      {/* ===== NAVBAR ===== */}
+      <nav className="homeNav">
 
+        <h2 className="brand">
+          Alpha <span>Speed</span>
+        </h2>
 
-            <div className="meetContainer">
-                <div className="leftPanel">
-                    <div>
-                        <h2>Providing Quality Video Call Just Like Quality Education</h2>
+        <div className="navRight">
 
-                        <div style={{ display: 'flex', gap: "10px" }}>
+          <IconButton
+            className="historyBtn"
+            onClick={() => navigate("/history")}
+          >
+            <RestoreIcon />
+            <span>History</span>
+          </IconButton>
 
-                            <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
-                            <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
+          <div className="liveClock">
+            <span>{formattedTime}</span>
+            <small>{formattedDate}</small>
+          </div>
 
-                        </div>
-                    </div>
-                </div>
-                <div className='rightPanel'>
-                    <img srcSet='/logo3.svg' alt="" />
-                </div>
-            </div>
-        </>
-    )
+          <Button
+            className="logoutBtn"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/auth");
+            }}
+          >
+            Logout
+          </Button>
+
+        </div>
+      </nav>
+
+      {/* ===== HERO ===== */}
+      <section className="heroArea">
+
+        <div className="heroLeft">
+
+          <p className="welcome">Welcome back 👋</p>
+
+          <h1>
+            Ready for your next
+            <span> meeting?</span>
+          </h1>
+
+          <p className="subtitle">
+            Enter a meeting code or create a new instant room.
+          </p>
+
+          <div className="joinBox">
+
+            <TextField
+              label="Enter Meeting Code"
+              variant="outlined"
+              onChange={(e) => setMeetingCode(e.target.value)}
+              fullWidth
+            />
+
+            <Button
+              className="joinBtn"
+              variant="contained"
+              onClick={handleJoinVideoCall}
+            >
+              Join Now
+            </Button>
+
+            <Button
+              className="createBtn"
+              variant="outlined"
+              onClick={handleCreateMeeting}
+            >
+              Create Meeting
+            </Button>
+
+          </div>
+
+          {errorMsg && <p className="inputError">{errorMsg}</p>}
+
+        </div>
+
+        <div className="heroRight">
+          <img src="/logo3.svg" alt="meeting visual" />
+        </div>
+
+      </section>
+
+      {/* ===== FEATURES ===== */}
+      <section className="quickFeatures">
+
+        <div className="featureCard">
+          <h3>⚡ Instant Join</h3>
+          <p>No setup required. Just enter code & go.</p>
+        </div>
+
+        <div className="featureCard">
+          <h3>🔒 Secure Sessions</h3>
+          <p>Encrypted meetings built for safety.</p>
+        </div>
+
+        <div className="featureCard">
+          <h3>📜 History Access</h3>
+          <p>Rejoin previous calls anytime.</p>
+        </div>
+
+      </section>
+
+    </div>
+  );
 }
 
-
-export default withAuth(HomeComponent)
+export default withAuth(HomeComponent);

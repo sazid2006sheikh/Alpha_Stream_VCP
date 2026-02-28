@@ -15,7 +15,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../contexts/AuthContext';
 import { Snackbar } from '@mui/material';
 
-
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -67,109 +69,248 @@ export default function Authentication() {
 
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+  <ThemeProvider theme={defaultTheme}>
+    <CssBaseline />
 
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background:
+          "linear-gradient(135deg, #020617 0%, #0f172a 55%, #7c2d12 100%)",
+        px: 2,
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{
+          width: "100%",
+          maxWidth: 430,
+          p: 4,
+          borderRadius: 4,
+          background: "rgba(15,23,42,0.78)",
+          backdropFilter: "blur(14px)",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+          color: "white",
+        }}
+      >
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Avatar
+            sx={{
+              m: 1,
+              width: 58,
+              height: 58,
+              bgcolor: "#f97316",
+            }}
+          >
+            <LockOutlinedIcon />
+          </Avatar>
 
-                        <div>
-                            <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
-                                Sign In
-                            </Button>
-                            <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
-                                Sign Up
-                            </Button>
-                        </div>
+          <Typography variant="h5" fontWeight={700}>
+            {formState === 0 ? "Welcome Back" : "Create Account"}
+          </Typography>
 
-                        <Box component="form" noValidate sx={{ mt: 1 }}>
-                            {formState === 1 ? <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Full Name"
-                                name="username"
-                                value={name}
-                                autoFocus
-                                onChange={(e) => setName(e.target.value)}
-                            /> : <></>}
+          <Typography variant="body2" sx={{ color: "#cbd5e1", mt: 1, mb: 3 }}>
+            {formState === 0
+              ? "Login to continue your journey"
+              : "Sign up and start building"}
+          </Typography>
 
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
-                                value={username}
-                                autoFocus
-                                onChange={(e) => setUsername(e.target.value)}
+          {/* LOGIN SWITCH */}
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              background: "#1e293b",
+              borderRadius: 3,
+              p: 0.5,
+              mb: 2,
+            }}
+          >
+            <Button
+              fullWidth
+              variant={formState === 0 ? "contained" : "text"}
+              onClick={() => setFormState(0)}
+              sx={{
+                borderRadius: 2,
+                ...(formState === 0 && {
+                  bgcolor: "#f97316",
+                  "&:hover": { bgcolor: "#ea580c" },
+                }),
+              }}
+            >
+              Sign In
+            </Button>
 
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                value={password}
-                                type="password"
-                                onChange={(e) => setPassword(e.target.value)}
+            <Button
+              fullWidth
+              variant={formState === 1 ? "contained" : "text"}
+              onClick={() => setFormState(1)}
+              sx={{
+                borderRadius: 2,
+                ...(formState === 1 && {
+                  bgcolor: "#f97316",
+                  "&:hover": { bgcolor: "#ea580c" },
+                }),
+              }}
+            >
+              Sign Up
+            </Button>
+          </Box>
 
-                                id="password"
-                            />
+          {/* GOOGLE LOGIN */}
+            <Button
+            fullWidth
+            variant="contained"
+            startIcon={<GoogleIcon />}
+            sx={{
+                mb: 1,
+                borderRadius: 2,
+                background: "#fff",
+                color: "#111",
+                textTransform: "none",
+                fontWeight: 600,
+                justifyContent: "flex-center",
+                pl: 2,
+                "&:hover": { background: "#f1f5f9" },
+            }}
+            >
+            Continue with Google
+            </Button>
 
-                            <p style={{ color: "red" }}>{error}</p>
+            {/* FACEBOOK LOGIN */}
+            <Button
+            fullWidth
+            variant="contained"
+            startIcon={<FacebookIcon />}
+            sx={{
+                mb: 1,
+                borderRadius: 2,
+                background: "#1877F2",
+                textTransform: "none",
+                fontWeight: 600,
+                justifyContent: "flex-center",
+                pl: 2,
+                "&:hover": { background: "#166fe5" },
+            }}
+            >
+            Continue with Facebook
+            </Button>
 
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                onClick={handleAuth}
-                            >
-                                {formState === 0 ? "Login " : "Register"}
-                            </Button>
+            {/* GITHUB LOGIN */}
+            <Button
+            fullWidth
+            variant="contained"
+            startIcon={<GitHubIcon />}
+            sx={{
+                mb: 2,
+                borderRadius: 2,
+                background: "#24292f",
+                textTransform: "none",
+                fontWeight: 600,
+                justifyContent: "flex-center",
+                pl: 2,
+                "&:hover": { background: "#111" },
+            }}
+            >
+            Continue with GitHub
+            </Button>
+          <Typography variant="caption" sx={{ color: "#94a3b8", mb: 1 }}>
+            — OR —
+          </Typography>
 
-                        </Box>
-                    </Box>
-                </Grid>
-            </Grid>
+          {/* FORM */}
+          <Box component="form" noValidate sx={{ width: "100%" }}>
+            {formState === 1 && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                InputLabelProps={{ style: { color: "#94a3b8" } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                    color: "white",
+                  },
+                }}
+              />
+            )}
 
-            <Snackbar
-
-                open={open}
-                autoHideDuration={4000}
-                message={message}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              InputLabelProps={{ style: { color: "#94a3b8" } }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  color: "white",
+                },
+              }}
             />
 
-        </ThemeProvider>
-    );
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputLabelProps={{ style: { color: "#94a3b8" } }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  color: "white",
+                },
+              }}
+            />
+
+            {error && (
+              <Typography color="error" fontSize={13} mt={1}>
+                {error}
+              </Typography>
+            )}
+
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              onClick={handleAuth}
+              sx={{
+                mt: 3,
+                py: 1.2,
+                borderRadius: 2,
+                fontWeight: 700,
+                background:
+                  "linear-gradient(90deg,#f97316 0%, #ea580c 100%)",
+                boxShadow: "0 8px 20px rgba(249,115,22,0.4)",
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                },
+                transition: "0.3s",
+              }}
+            >
+              {formState === 0 ? "Login" : "Register"}
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Box>
+
+    <Snackbar
+      open={open}
+      autoHideDuration={4000}
+      message={message}
+    />
+  </ThemeProvider>
+);
 }

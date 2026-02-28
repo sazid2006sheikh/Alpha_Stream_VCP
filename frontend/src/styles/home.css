@@ -1,0 +1,280 @@
+/* ===== PAGE BASE ===== */
+
+.homePage {
+  min-height: 100vh;
+  background: #0b0f17;
+  color: white;
+}
+
+/* ===== NAVBAR ===== */
+
+.homeNav {
+  height: 70px;
+  padding: 0 5%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #101722;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand span {
+  color: #ff9839;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== HISTORY BUTTON ===== */
+
+.historyBtn {
+  color: #ff9839 !important;
+  display: flex !important;
+  gap: 6px;
+  align-items: center;
+  font-weight: 500;
+}
+
+.historyBtn span {
+  font-size: 0.9rem;
+  color: white;
+}
+
+.logoutBtn {
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: white !important;
+}
+
+/* ===== HERO ===== */
+
+.heroArea {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+
+  padding: 4rem 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.heroLeft {
+  flex: 1;
+  min-width: 300px;
+}
+
+.welcome {
+  color: #ff9839;
+  margin-bottom: 8px;
+}
+
+.heroLeft h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+.heroLeft h1 span {
+  color: #ff9839;
+}
+
+.subtitle {
+  margin: 1rem 0 2rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* JOIN BOX */
+
+.joinBox {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.joinBtn {
+  background: linear-gradient(
+    135deg,
+    #ff9839,
+    #ff6f00
+  ) !important;
+
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+
+  padding: 0 22px !important;
+  border-radius: 12px !important;
+
+  position: relative;
+  overflow: hidden;
+
+  transition: 0.3s ease !important;
+}
+
+/* hover glow */
+
+.joinBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255,152,57,0.4);
+}
+
+/* shine animation */
+
+.joinBtn::before {
+  content: "";
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  background: rgba(255,255,255,0.25);
+  top: 0;
+  left: -40%;
+  transform: skewX(-20deg);
+
+  transition: 0.5s;
+}
+
+.joinBtn:hover::before {
+  left: 120%;
+}
+
+/* ===== CREATE MEETING BUTTON ===== */
+
+.createBtn {
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  color: white !important;
+  border-radius: 12px !important;
+
+  transition: 0.3s ease !important;
+}
+
+.createBtn:hover {
+  border-color: #ff9839 !important;
+  background: rgba(255,152,57,0.12) !important;
+}   
+
+/* IMAGE */
+
+.heroRight {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.heroRight img {
+  width: 360px;
+  max-width: 100%;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* ===== FEATURES ===== */
+
+.quickFeatures {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 1rem;
+
+  padding-bottom: 3rem;
+}
+
+.featureCard {
+  background: #131a26;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.2rem;
+
+  transition: 0.3s;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,152,57,0.5);
+}
+
+.featureCard p {
+  margin-top: 6px;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:900px){
+
+  .heroArea {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .joinBox {
+    justify-content: center;
+  }
+
+  .heroLeft h1 {
+    font-size: 2.2rem;
+  }
+
+}
+
+/* ===== INPUT FIELD ===== */
+
+.joinBox .MuiOutlinedInput-root {
+  background: rgba(255,255,255,0.06);
+  color: white !important;
+}
+
+.joinBox .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255,255,255,0.25) !important;
+}
+
+.joinBox .MuiInputLabel-root {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.joinBox .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #ff9839 !important;
+}
+
+.joinBox .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #ff9839 !important;
+}
+
+/* ===== LIVE CLOCK ===== */
+
+.liveClock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  margin-right: 14px;
+}
+
+.liveClock span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+}
+
+.liveClock small {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.65);
+}
+
+.inputError {
+  margin-top: 8px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+}
