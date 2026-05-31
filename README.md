@@ -1,4 +1,4 @@
-# 🚀 Alpha-Speed — Video Conferencing & Real-Time Chat Web App
+# 🚀 Alpha-Stream — Video Conferencing & Real-Time Chat Web App
 
 ![React](https://img.shields.io/badge/React-18-blue?logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-18-green?logo=node.js)
