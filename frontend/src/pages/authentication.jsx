@@ -16,12 +16,21 @@ import { AuthContext } from '../contexts/AuthContext';
 import { Snackbar } from '@mui/material';
 
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: "'Poppins', sans-serif",
+    h5: {
+      fontWeight: 700,
+    },
+    button: {
+      textTransform: "none",
+      fontWeight: 600,
+    },
+  },
+});
 
 export default function Authentication() {
 
@@ -114,8 +123,8 @@ export default function Authentication() {
 
           <Typography variant="body2" sx={{ color: "#cbd5e1", mt: 1, mb: 3 }}>
             {formState === 0
-              ? "Login to continue your journey"
-              : "Sign up and start building"}
+              ? "Login to continue"
+              : "Sign up and Connect with the world!"}
           </Typography>
 
           {/* LOGIN SWITCH */}
@@ -168,10 +177,10 @@ export default function Authentication() {
             sx={{
                 mb: 1,
                 borderRadius: 2,
-                background: "#fff",
+                background: "#f1f1f1",
                 color: "#111",
                 textTransform: "none",
-                fontWeight: 600,
+                fontWeight: 300,
                 justifyContent: "flex-center",
                 pl: 2,
                 "&:hover": { background: "#f1f5f9" },
@@ -180,44 +189,7 @@ export default function Authentication() {
             Continue with Google
             </Button>
 
-            {/* FACEBOOK LOGIN */}
-            <Button
-            fullWidth
-            variant="contained"
-            startIcon={<FacebookIcon />}
-            sx={{
-                mb: 1,
-                borderRadius: 2,
-                background: "#1877F2",
-                textTransform: "none",
-                fontWeight: 600,
-                justifyContent: "flex-center",
-                pl: 2,
-                "&:hover": { background: "#166fe5" },
-            }}
-            >
-            Continue with Facebook
-            </Button>
-
-            {/* GITHUB LOGIN */}
-            <Button
-            fullWidth
-            variant="contained"
-            startIcon={<GitHubIcon />}
-            sx={{
-                mb: 2,
-                borderRadius: 2,
-                background: "#24292f",
-                textTransform: "none",
-                fontWeight: 600,
-                justifyContent: "flex-center",
-                pl: 2,
-                "&:hover": { background: "#111" },
-            }}
-            >
-            Continue with GitHub
-            </Button>
-          <Typography variant="caption" sx={{ color: "#94a3b8", mb: 1 }}>
+          <Typography variant="caption" sx={{ color: "#94a3b8", mb: 1, my: 2 }}>
             — OR —
           </Typography>
 
